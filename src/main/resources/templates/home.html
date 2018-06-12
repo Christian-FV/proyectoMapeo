@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel='stylesheet' th:href='@{webjars/bootstrap/3.3.5/css/bootstrap.min.css}'/>
+	<title>Blog UACM</title>
+	
+	<script src="js/jquery-1.12.0.js"></script>
+	<link rel="stylesheet" th:href="@{/css/estilo.css}"/>
+	
+	
+	<script type="text/javascript">
+	    $(document).ready(function() {
+	        $(".dotdotdot").dotdotdot({
+	        	height: 25
+	    });
+	    });
+	</script>
+	
+</head>
+	
+
+<body>
+
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+ <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" th:href="@{/}">Blog UACM</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li class="active"><a th:href="@{/}"><span class="glyphicon glyphicon-home"></span> Inicio </a></li>
+      <li><a th:href="@{/autores}"><span class="glyphicon glyphicon-user"></span> Autores </a></li>
+      
+      <!-- Validar si ya se registro el usuario -->
+      <li th:if="${session.userLoggedIn}"><a th:href="@{/escribirpost}"><span class="glyphicon glyphicon-edit"></span> Escribir post </a></li>
+      <li th:unless="${session.userLoggedIn}"><a th:href="@{/registro}"><span class="glyphicon glyphicon-edit"></span> Sign Up</a></li>
+      
+      <!-- Validad si esta iniciada la sesion o no y lo cambia por cerrar sesion -->
+      <li th:if="${session.userLoggedIn}"><a th:href="@{/logout}" ><span class="glyphicon glyphicon-log-out"></span> Logout  (Bienvenido usuario <input type="hidden" th:text="${param.ids}"/>)</a></li>
+      <li th:unless="${session.userLoggedIn}"><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav> 
+  
+</div>
+
+
+<div class="container" align="center">
+	<div class="jumbotron">
+  	<h1>UACM Blog, un <br/>
+  	  blog sobre <br/> Hibernate
+  	</h1>
+  	<h3>Tecnologías, Lenguajes, Tips y Más..</h3>
+  	<form th:action="@{/registro}"  method="get"  th:unless="${session.userLoggedIn}">
+  		<input type="submit"  class="btn btn-info btn-lg" value="Registrate"/>
+  	</form>
+  	<!-- button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal" >Registrate!!</button> -->
+  </div>
+ 
+ </div>
+  
+		<div class="container">
+		
+				<table class="table" th:each="articulos : ${articulos}">
+					
+					<tr>
+						<td>
+						
+							 <h1 th:text="${articulos.titulo}"></h1>
+						</td>
+						<td align="right"><h4>Autor:</h4> <h4 th:text="${articulos.usuario.nombre}" ></h4></td>
+					</tr>
+					
+					<tr> 
+					
+						<td>
+							<div class="dotdotdot">
+								<p th:utext="${articulos.contenido}"></p>
+							</div><br/>
+							<span class="label label-default" th:text="${articulos.fecha}">  </span>
+							<span class="label label-warning" th:inline="text">[[${articulos.comentarios.size()}]] comentarios </span>
+							<br/><br/>
+							<form th:action="@{/mostrar}" method="get">
+					        	<input type="hidden" th:value="${articulos.idArticulo}" id="articulo_id" name="articulo_id"/>
+					        	<input type="submit" class="btn btn-info btn-lg" value="mostrar todo..."/>
+					        </form>		
+						</td>
+						
+					</tr>
+					
+				</table>
+		</div>
+<script src="js/bootstrap3-wysihtml5.all.min.js"></script> 
+<script type="text/javascript" language="javascript" th:src="@{js/jquery.dotdotdot.js}"></script>
+	
+   
+   
+		   
+</body>
+</html>

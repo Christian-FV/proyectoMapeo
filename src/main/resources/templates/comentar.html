@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel='stylesheet' th:href='@{webjars/bootstrap/3.3.5/css/bootstrap.min.css}'/>
+	<title>Blog UACM</title>
+	
+	<script src="js/jquery-1.12.0.js"></script>
+	<link rel="stylesheet" th:href="@{/css/estilo.css}"/>
+	
+	
+</head>
+<body>
+	<div class="collapse navbar-collapse" id="navbar-collapse-1">
+	 <nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" th:href="@{/}">Blog UACM</a>
+	    </div>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li class="active"><a th:href="@{/}"><span class="glyphicon glyphicon-home"></span> Inicio </a></li>
+	      <li><a th:href="@{/autores}"><span class="glyphicon glyphicon-user"></span> Autores </a></li>
+	      
+	      <!-- Validar si ya se registro el usuario -->
+	      <li th:if="${session.userLoggedIn}"><a th:href="@{/escribirpost}"><span class="glyphicon glyphicon-edit"></span> Escribir post </a></li>
+	      <li th:unless="${session.userLoggedIn}"><a th:href="@{/registro}"><span class="glyphicon glyphicon-edit"></span> Sign Up</a></li>
+	      
+	      <!-- Validad si esta iniciada la sesion o no y lo cambia por cerrar sesion -->
+	      <li th:if="${session.userLoggedIn}"><a th:href="@{/logout}" ><span class="glyphicon glyphicon-log-out"></span> Logout  ( Bienvenido usuario <input type="hidden" th:text="${session.userLoggedIn}"> )</a></li>
+	      <li th:unless="${session.userLoggedIn}"><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+	    </ul>
+	  </div>
+	</nav> 
+	</div>
+	<div class="container">
+	<div class="jumbotron myBackground">
+		<section>
+		<h3>Autor:</h4> <h3 th:text="${articulo.usuario.nombre}" ></h3>
+		<h1 th:text="${articulo.titulo}"></h1>
+		<p th:utext="${articulo.contenido}"></p>
+		</section>
+		<span class="label label-warning" th:text="${articulo.fecha}">  </span>
+	<br/><br/><br/>		
+        <form method="post" th:action="@{/comentar}" >
+			<input  th:if="${session.userLoggedIn}" type="text" placeholder="Introduce comentario..." name="contenido" id="contenido" class="form-control" /><br/>
+			<input type="hidden" th:value="${articulo.idArticulo}" id="articulo_id" name="articulo_id"/>
+			<input  th:if="${session.userLoggedIn}" type="submit"  class="btn btn-lg btn-primary btn-block" value="Comentario"/>
+			<h5 th:unless="${session.userLoggedIn}"> Para hacer comentario necesitas registrarte!!!</h5>
+			<br/><br/>
+			<table class="table" th:each="comentarios : ${comentarios}">
+			<tr>
+				<td th:text ="${comentarios.idComentario}"></td>
+				<td th:text ="${comentarios.contenido}"></td>
+			</tr>
+			</table>
+		</form><br/><br/>
+      </div>
+      </div>
+      
+	
+	
+</body>
+</html>

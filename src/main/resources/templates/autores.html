@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel='stylesheet' th:href='@{webjars/bootstrap/3.3.5/css/bootstrap.min.css}'/>
+<link rel="stylesheet" th:href="@{css/estilo.css}"/>
+	<title>Blog UACM</title>
+</head>
+<body>
+
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+ <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" th:href="@{/}">Blog UACM</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a th:href="@{/}"><span class="glyphicon glyphicon-home"></span> Inicio </a></li>
+      <li class="active"><a th:href="@{/autores}"><span class="glyphicon glyphicon-user"></span> Autores </a></li>
+      
+      <!-- Validar si ya se registro el usuario -->
+      <li th:if="${session.userLoggedIn}"><a th:href="@{/escribirpost}"><span class="glyphicon glyphicon-edit"></span> Escribir post </a></li>
+      <li th:unless="${session.userLoggedIn}"><a th:href="@{/registro}"><span class="glyphicon glyphicon-edit"></span> Sign Up</a></li>
+      
+      <!-- Validad si esta iniciada la sesion o no y lo cambia por cerrar sesion -->
+      <li th:if="${session.userLoggedIn}"><a th:href="@{/logout}" ><span class="glyphicon glyphicon-log-out"></span> Logout  (Bienvenido usuario <input type="hidden" th:text="${session.userLoggedIn}"/>)</a></li>
+      <li th:unless="${session.userLoggedIn}"><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
+  </div>
+</nav> 
+  
+</div>
+
+<div class="container" align="center">
+  <div class="jumbotron myBackground">
+  
+  	<table class="table" th:each="usuarios : ${usuarios}">
+  		<tr>
+			<th th:text = "${usuarios.nombre}" colspan="3"></th>
+			
+		</tr>
+		 <tr>
+		 		
+                <td rowspan="4"><img src="http://www.iconninja.com/files/522/684/984/men-person-human-male-users-account-people-man-profile-avatar-user-icon.png"/></td>
+                <td> Fecha alta </td>
+                <td th:text = "${usuarios.fechaAlta}"></td>
+         </tr>
+         <tr>
+            	<td> Ciudad </td>
+                <td th:text = "${usuarios.ciudad}"></td>
+         </tr>
+         <tr>
+            	<td> Correo </td>
+                <td th:text = "${usuarios.correo}"></td>
+         </tr>
+         <tr>
+                <td > Articulo (s) </td>
+                <td th:inline="text"> [[${usuarios.articulos.size()}]] Articulo (s), [[${usuarios.Comentarios.size()}]] Comentario (s)</td>
+         </tr> 
+         <tr >
+         	<th colspan="3" id="foot"> </th>
+         </tr>
+		  	
+  	
+  	</table>
+	
+	</div>
+
+</div>
+	
+
+
+</body>
+</html>
