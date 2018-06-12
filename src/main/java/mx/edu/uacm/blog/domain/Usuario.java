@@ -15,6 +15,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
 
 import org.hibernate.annotations.ColumnTransformer;
+/**
+ * 
+ * @author ChristianFV
+ *
+ */
 
 @Entity(name="usuario")
 public class Usuario implements Serializable {
