@@ -1,6 +1,5 @@
 package mx.edu.uacm.blog.controller;
 
-import static org.assertj.core.api.Assertions.setAllowComparingPrivateFields;
 
 import java.util.Date;
 import java.util.List;
