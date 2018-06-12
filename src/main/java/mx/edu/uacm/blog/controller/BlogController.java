@@ -24,7 +24,11 @@ import mx.edu.uacm.blog.domain.Usuario;
 import mx.edu.uacm.blog.service.ArticuloService;
 import mx.edu.uacm.blog.service.ComentarioService;
 import mx.edu.uacm.blog.service.UsuarioService;
-
+/**
+ * 
+ * @author ChristianFV
+ *
+ */
 @Controller
 public class BlogController {
 
