@@ -29,6 +29,7 @@ import mx.edu.uacm.blog.service.UsuarioService;
  * @author ChristianFV
  *
  */
+
 @Controller
 public class BlogController {
 
